@@ -14,26 +14,28 @@ function assertIsLoggedIn(req, res, next) {
   }
 }
 
-router.get('/:id', function(req, res, next){
+router.get('/:id', function (req, res, next) {
   Review.findById(req.params.id)
-  .then(review => res.send(review))
-  .catch(next);
+    .then(review => res.send(review))
+    .catch(next);
 });
 
-router.get('/', function(req, res, next) {
-  Review.findAll({ where:req.query,
-    include:[User] })
-  .then(reviews => res.send(reviews))
-  .catch(next);
-});
-
-router.post('/', assertIsLoggedIn, function(req, res, next){
-  Review.create(req.body)
-  .then(function(review) {
-    review.setUser(req.session.passport.user)
+router.get('/', function (req, res, next) {
+  Review.findAll({
+    where: req.query,
+    include: [User]
   })
-  .then(review => res.send(review))
-  .catch(next);
+    .then(reviews => res.send(reviews))
+    .catch(next);
+});
+
+router.post('/', assertIsLoggedIn, function (req, res, next) {
+  Review.create(req.body)
+    .then(function (review) {
+      review.setUser(req.session.passport.user)
+    })
+    .then(review => res.send(review))
+    .catch(next);
 });
 
 module.exports = router;
