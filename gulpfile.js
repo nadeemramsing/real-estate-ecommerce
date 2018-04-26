@@ -1,28 +1,29 @@
 // All used modules.
-var gulp = require('gulp');
-var babel = require('gulp-babel');
-var runSeq = require('run-sequence');
-var plumber = require('gulp-plumber');
-var concat = require('gulp-concat');
-var rename = require('gulp-rename');
-var sass = require('gulp-sass');
-var livereload = require('gulp-livereload');
-var minifyCSS = require('gulp-minify-css');
-var ngAnnotate = require('gulp-ng-annotate');
-var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
-var eslint = require('gulp-eslint');
-var mocha = require('gulp-mocha');
-var karma = require('karma').server;
-var istanbul = require('gulp-istanbul');
-var notify = require('gulp-notify');
+const
+    babel = require('gulp-babel'),
+    concat = require('gulp-concat'),
+    eslint = require('gulp-eslint'),
+    gulp = require('gulp'),
+    istanbul = require('gulp-istanbul'),
+    karma = require('karma').server,
+    livereload = require('gulp-livereload'),
+    minifyCSS = require('gulp-minify-css'),
+    mocha = require('gulp-mocha'),
+    ngAnnotate = require('gulp-ng-annotate'),
+    notify = require('gulp-notify'),
+    plumber = require('gulp-plumber'),
+    rename = require('gulp-rename'),
+    runSeq = require('run-sequence'),
+    sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
+    uglify = require('gulp-uglify');
 
 // Development tasks
 // --------------------------------------------------------------
 
 // Live reload business.
 gulp.task('reload', function () {
-    livereload.reload();
+    return livereload.reload();
 });
 
 gulp.task('reloadCSS', function () {
@@ -30,7 +31,6 @@ gulp.task('reloadCSS', function () {
 });
 
 gulp.task('lintJS', function () {
-
     return gulp.src(['./browser/js/**/*.js', './server/**/*.js'])
         .pipe(plumber({
             errorHandler: notify.onError('Linting FAILED! Check your gulp process.')
@@ -71,8 +71,8 @@ gulp.task('testServerJSWithCoverage', function (done) {
         }))
         .pipe(istanbul.hookRequire())
         .on('finish', function () {
-            gulp.src('./tests/server/**/*.js', {read: false})
-                .pipe(mocha({reporter: 'spec'}))
+            gulp.src('./tests/server/**/*.js', { read: false })
+                .pipe(mocha({ reporter: 'spec' }))
                 .pipe(istanbul.writeReports({
                     dir: './coverage/server/',
                     reporters: ['html', 'text']
@@ -91,7 +91,6 @@ gulp.task('testBrowserJS', function (done) {
 });
 
 gulp.task('buildCSS', function () {
-
     var sassCompilation = sass();
     sassCompilation.on('error', console.error.bind(console));
 
@@ -142,7 +141,6 @@ gulp.task('build', function () {
 });
 
 gulp.task('default', function () {
-
     gulp.start('build');
 
     // Run when anything inside of browser/js changes.
@@ -167,5 +165,4 @@ gulp.task('default', function () {
     gulp.watch('tests/browser/**/*', ['testBrowserJS']);
 
     livereload.listen();
-
 });
