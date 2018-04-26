@@ -3,7 +3,6 @@ var Sequelize = require('sequelize');
 var Hashids = require('hashids');
 var hashids = new Hashids();
 
-
 var db = require('../_db');
 
 module.exports = db.define('order', {

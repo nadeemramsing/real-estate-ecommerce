@@ -38,7 +38,6 @@ gulp.task('lintJS', function () {
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failOnError());
-
 });
 
 gulp.task('buildJS', ['lintJS'], function () {

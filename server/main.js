@@ -12,15 +12,16 @@ var createApplication = function () {
 };
 
 var startServer = function () {
-
     var PORT = process.env.PORT || 1337;
 
     server.listen(PORT, function () {
         console.log(chalk.blue('Server started on port', chalk.magenta(PORT)));
     });
-
 };
 
-db.sync().then(createApplication).then(startServer).catch(function (err) {
-    console.error(chalk.red(err.stack));
-});
+db.sync()
+    .then(createApplication)
+    .then(startServer)
+    .catch(function (err) {
+        console.error(chalk.red(err.stack));
+    });
